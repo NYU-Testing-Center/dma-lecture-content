@@ -530,6 +530,33 @@ def end_card(number: int, title: str) -> str:
 </div>"""
 
 
+COLAB_REPO = "NYU-Testing-Center/dma-lecture-content"
+
+# Runs only in Colab: clone the repo and cd into notebooks/, so the lecture's
+# relative paths to its data files (CSV, JSON, XML, .db, ...) resolve exactly as
+# they do in a codespace. Elsewhere it does nothing.
+COLAB_SETUP = f"""# Colab setup: download the course data files this lecture uses.
+# Outside Colab (Codespaces, your own machine) this cell does nothing.
+import os, sys
+if "google.colab" in sys.modules:
+    if not os.path.exists("/content/dma-lecture-content"):
+        !git clone --depth 1 -q https://github.com/{COLAB_REPO}.git /content/dma-lecture-content
+    %cd /content/dma-lecture-content/notebooks"""
+
+
+def colab_cells(fname: str, nb: dict, data_files: list[str]) -> list[dict]:
+    """An Open in Colab button for every lecture, plus the setup cell for lectures
+    whose code reads a data file from notebooks/. Both are skipped in the slideshow."""
+    url = f"https://colab.research.google.com/github/{COLAB_REPO}/blob/main/notebooks/{fname}"
+    cells = [cell("markdown",
+                  f"[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]({url})",
+                  "skip")]
+    code = "\n".join("".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code")
+    if any(name in code for name in data_files):
+        cells.append(cell("code", COLAB_SETUP, "skip"))
+    return cells
+
+
 def build_notebook(lesson: dict, notebooks: dict, renderer: EdRenderer, course: dict) -> tuple[dict, dict]:
     number = lesson["index"]
     _, title = strip_lecture_number(lesson["title"])
@@ -679,12 +706,19 @@ def main() -> None:
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # data files the lectures read, which Colab gets via the setup cell
+    data_files = [p.name for p in out_dir.iterdir()
+                  if p.is_file() and p.suffix != ".ipynb" and p.name != "manifest.json"]
+
     manifest = []
     totals = {"content": 0, "demo": 0, "exercise": 0, "cells": 0}
     for lesson in sorted(raw["lessons"], key=lambda L: L["index"]):
         nb, counts = build_notebook(lesson, raw["notebooks"], renderer, course)
         _, title = strip_lecture_number(lesson["title"])
         fname = f"lecture-{lesson['index']:02d}-{slugify(title)[:60]}.ipynb"
+        # right after the title card
+        nb["cells"][1:1] = colab_cells(fname, nb, data_files)
+        assign_ids(nb["cells"], lesson["index"])
         (out_dir / fname).write_text(json.dumps(nb, indent=1, ensure_ascii=False) + "\n")
         for k in ("content", "demo", "exercise"):
             totals[k] += counts[k]
