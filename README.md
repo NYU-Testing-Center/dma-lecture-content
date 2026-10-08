@@ -281,8 +281,7 @@ Keep in mind:
   you download them.
 - **Save your own copy** with **File → Save a copy in Drive** if you want to
   keep your edits; the copy opened from GitHub is not saved.
-- **Some things need a codespace or your own machine:** the slideshow view,
-  the MongoDB (Lecture 32) and Neo4j (Lecture 33) servers, and some diagrams
-  stored as image files in the repository, which Colab may not display.
+- **Some things need a codespace or your own machine:** the slideshow view and
+  the MongoDB (Lecture 32) and Neo4j (Lecture 33) servers.
 
 ---

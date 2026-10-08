@@ -35,6 +35,9 @@ DEMO_TINT = "#e6f5f6"
 INK = "#241c2c"
 MUTED = "#6b6478"
 
+# Where notebook images are served from (the repo's notebooks/ folder on GitHub).
+IMAGE_BASE = "https://raw.githubusercontent.com/NYU-Testing-Center/dma-lecture-content/main/notebooks/"
+
 # Global slide styling.
 #
 # JupyterLab's own `.jp-RenderedHTMLCommon h2` rules tie with a plain
@@ -285,6 +288,10 @@ class EdRenderer:
         if not local:
             self.missing_images.add(src)
             local = src
+        else:
+            # Absolute link to the repo's copy, so the image also shows in Colab,
+            # which can't resolve a path relative to the notebook.
+            local = IMAGE_BASE + local
         width = el.get("width")
         if width:
             try:
