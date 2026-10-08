@@ -262,4 +262,27 @@ installations ship these by default, which is why both the codespace and
 and hit a blank slideshow running Jupyter directly, use `present.sh` (or the
 codespace) instead.
 
+## 8. Using Google Colab instead
+
+Every lecture has an **Open in Colab** button just below its title. Click it to
+open that lecture in [Google Colab](https://colab.research.google.com), with
+nothing to install.
+
+Lectures that read data files (CSV, JSON, XML, text and SQLite `.db` files)
+have a **Colab setup** cell right after the button. **Run it first.** It
+downloads this repository into Colab (a few seconds) and moves into the
+`notebooks` folder, so the lecture's code finds its files exactly as it does in
+a codespace. Outside Colab the cell does nothing.
+
+Keep in mind:
+
+- **Colab forgets everything when the session ends.** Run the setup cell again
+  each time you reopen a lecture. Any files the lecture creates are lost unless
+  you download them.
+- **Save your own copy** with **File → Save a copy in Drive** if you want to
+  keep your edits; the copy opened from GitHub is not saved.
+- **Some things need a codespace or your own machine:** the slideshow view,
+  the MongoDB (Lecture 32) and Neo4j (Lecture 33) servers, and some diagrams
+  stored as image files in the repository, which Colab may not display.
+
 ---
