@@ -1,0 +1,13 @@
+course_number,course_title,professor_name,professor_office,meeting_time,loc,student_name,uni,year_in_school
+CSCI-UA-0201-003,"Computer Systems Organization","Allan Gottlieb","60 Fifth Ave 316","TR 9:30-10:45AM",ONLINE,"David Chang",dc2312,Freshman
+CSCI-UA-0201-003,"Computer Systems Organization","Allan Gottlieb","60 Fifth Ave 316","TR 9:30-10:45AM",ONLINE,"Mary Todd",mt6271,Junior
+CSCI-UA-0202-002,"Operating Systems","Allan Gottlieb","60 Fifth Ave 316","TR 12:30-1:45PM","CIWW 109","David Chang",dc2312,Freshman
+CSCI-UA-0202-002,"Operating Systems","Allan Gottlieb","60 Fifth Ave 316","TR 12:30-1:45PM","CIWW 109","Mary Jones",mj3012,Junior
+CSCI-UA-0310-001,"Basic Algorithms","Chee Yap","WWH 301","TR 12:30-1:45PM",ONLINE,"Mary Jones",mj3012,Junior
+CSCI-UA-0310-001,"Basic Algorithms","Chee Yap","WWH 301","TR 12:30-1:45PM",ONLINE,"David Chang",dc2312,Freshman
+CSCI-UA-0310-001,"Basic Algorithms","Chee Yap","WWH 301","TR 12:30-1:45PM",ONLINE,"Amy Cohen",ac8874,Sophomore
+CSCI-UA-0310-001,"Basic Algorithms","Chee Yap","WWH 301","TR 12:30-1:45PM",ONLINE,"Vinod Patel",vp2314,Senior
+CSCI-UA-0310-003,"Basic Algorithms","Alan Siegel","WWH 330","MW 2:00-3:15PM","CIWW 109","Amy Cohen",ac8874,Sophomore
+CSCI-UA-0474-001,"Software Engineering","Amos Bloomberg","WWH 424","MW 2:00-3:15PM","5WP 101","Vinod Patel",vp2314,Senior
+CSCI-UA-0479-001,"Data Management and Analysis","Joseph Versoza","WWH 422","MW 11:00-12:15PM",ONLINE,"Vinod Patel",vp2314,Senior
+CSCI-UA-0479-001,"Data Management and Analysis","Joseph Versoza","WWH 422","MW 11:00-12:15PM",ONLINE,"Amy Cohen",ac8874,Sophomore
