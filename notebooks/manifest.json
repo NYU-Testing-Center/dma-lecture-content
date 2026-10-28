@@ -136,8 +136,8 @@
  },
  {
   "number": 16,
-  "title": "Pandas Part 1",
-  "file": "lecture-16-pandas-part-1.ipynb",
+  "title": "Pandas Part 1: Series and DataFrames",
+  "file": "lecture-16-pandas-part-1-series-and-dataframes.ipynb",
   "cells": 132,
   "content": 4,
   "demo": 63,
@@ -145,8 +145,8 @@
  },
  {
   "number": 17,
-  "title": "Pandas Part 2",
-  "file": "lecture-17-pandas-part-2.ipynb",
+  "title": "Pandas Part 2: Selecting, Adding, and Updating Data",
+  "file": "lecture-17-pandas-part-2-selecting-adding-and-updating-data.ipynb",
   "cells": 60,
   "content": 0,
   "demo": 28,
@@ -154,8 +154,8 @@
  },
  {
   "number": 18,
-  "title": "Pandas Part 3",
-  "file": "lecture-18-pandas-part-3.ipynb",
+  "title": "Pandas Part 3: Applying Functions and Summary Statistics",
+  "file": "lecture-18-pandas-part-3-applying-functions-and-summary-statistics.ipynb",
   "cells": 44,
   "content": 0,
   "demo": 20,
@@ -163,8 +163,8 @@
  },
  {
   "number": 19,
-  "title": "Pandas Part 4",
-  "file": "lecture-19-pandas-part-4.ipynb",
+  "title": "Pandas Part 4: Cleaning, Transforming, and Joining Data",
+  "file": "lecture-19-pandas-part-4-cleaning-transforming-and-joining-data.ipynb",
   "cells": 46,
   "content": 1,
   "demo": 20,
