@@ -1,0 +1,105 @@
+violation_code,violation_description
+02A,"Time/Temperature Control for Safety (TCS) food not cooked to required minimum internal temperature.   • Poultry, poultry parts, ground and comminuted poultry, all stuffing containing poultry, meats, fish or ratites to or above 165 °F for 15 seconds with no interruption of the cooking process   • Ground meat, and food containing ground and comminuted meat, to or above 158 °F for 15 seconds with no interruption of the cooking process, except per individual customer request  • Pork, any food containing pork to or above 150 °F for 15 seconds  • Mechanically tenderized or injected meats to or above 155 °F.  • Whole meat roasts and beef steak to or above required temperature and time except per individual customer request  • Raw animal foods cooked in microwave to or above165 °F, covered, rotated or stirred   • All other foods to or above 140 °F for 15 seconds; shell eggs to or above 145 °F for 15 seconds except per individual customer request."
+02B,Hot TCS food item not held at or above 140 °F.
+02C,Hot TCS food item that has been cooked and cooled is being held for service without first being reheated to 165º F or above within 2 hours.
+02D,Commercially processed pre-cooked TCS in hermetically sealed containers and precooked TCS in intact packages from non-retail food processing establishments not heated to 140 °F within 2 hours of removal from container or package.
+02F,"Meat, fish, molluscan shellfish, unpasteurized raw shell eggs, poultry or other TCS offered or served raw or undercooked and written notice not provided to consumer."
+02G,Cold TCS food item held above 41 °F; smoked or processed fish held above 38 °F; intact raw eggs held above 45 °F; or reduced oxygen packaged (ROP) TCS foods held above required temperatures except during active necessary preparation.
+02H,"After cooking or removal from hot holding, TCS food not cooled by an approved method whereby the internal temperature is reduced from 140 °F to 70 °F or less within 2 hours, and from 70 °F to 41 °F or less within 4 additional hours."
+02I,TCS food removed from cold holding or prepared from or combined with ingredients at room temperature not cooled by an approved method to 41 °F or below within 4 hours.
+03A,"Food, prohibited, from unapproved or unknown source, home canned or home prepared. Animal slaughtered, butchered or dressed (eviscerated, skinned) in establishment. Reduced Oxygen Packaged (ROP) fish not frozen before processing. ROP food prepared on premises transported to another site."
+03B,"Shellfish not from approved source, improperly tagged/labeled; tags not retained for 90 days."
+03C,"Unclean or cracked whole eggs or unpasteurized liquid, frozen or powdered eggs kept or used."
+03E,No or inadequate potable water supply. Water or ice not potable or from unapproved source. Bottled water not NY State certified.  Cross connection in potable water supply system.
+03F,Unpasteurized milk or milk product (except certain aged cheese) served.
+03I,"Juice packaged on premises with no or incomplete label, no warning statement"
+04A,Food Protection Certificate (FPC) not held by manager or supervisor of food operations.
+04C,Food worker/food vendor does not use utensil or other barrier to eliminate bare hand contact with food that will not receive adequate additional heat treatment.
+04D,"Food worker/food vendor does not wash hands thoroughly after using the toilet, or after coughing, sneezing, smoking, eating, preparing raw foods or otherwise contaminating hands or does not change gloves when required; Worker fails to refrain from smoking or being fully clothed in clean outer garments."
+04E,Toxic chemical or pesticide improperly stored or used such that food contamination may occur.
+04F,"Food, food preparation area, food storage area, or other area used by employees or patrons, contaminated by sewage or liquid waste."
+04H,"Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan."
+04I,Non-TCS food that has been served to the public being re-served. (Does not apply to wrapped foods where the wrapper seal has not been broken or opened).
+04J,"Properly scaled and calibrated thermometer or thermocouple not provided or not readily accessible in food preparation and hot/cold holding areas to measure temperatures of TCS foods during cooking, cooling, reheating, and holding."
+04K,Evidence of rats or live rats in establishment's food or non-food areas.
+04L,Evidence of mice or live mice in establishment's food or non-food areas.
+04M,Live roaches in facility's food or non-food area.
+04N,"Filth flies or food/refuse/sewage associated with (FRSA) flies or other nuisance pests in establishment’s food and/or non-food areas. FRSA flies include house flies, blow flies, bottle flies, flesh flies, drain flies, Phorid flies and fruit flies."
+04O,Live animal other than fish in tank or service animal present in facility’s food or non-food area.
+04P,"Food containing a prohibited substance held, kept, offered, prepared, processed, packaged, or served."
+05A,"Sewage disposal system is not provided, improper, inadequate or unapproved."
+05B,Harmful noxious gas or vapor detected. Carbon Monoxide (CO) level exceeds nine (9) ppm
+05C,"Food contact surface, refillable, reusable containers, or equipment improperly constructed, placed or maintained. Unacceptable material used. Culinary sink or other acceptable method not provided for washing food."
+05D,"No hand washing facility in or adjacent to toilet room or within 25 feet of a food preparation, food service or ware washing area. Hand washing facility not accessible, obstructed or used for non-hand washing purposes. No hot and cold running water or water at inadequate pressure. No soap or acceptable hand-drying device."
+05E,"Toilet facility not provided for employees or for patrons when required. Shared patron-employee toilet accessed through kitchen, food prep or storage area or utensil washing area."
+05F,"Insufficient or no hot holding, cold storage or cold holding equipment provided to maintain Time/Temperature Control for Safety Foods (TCS) at required temperatures"
+05H,No approved written standard operating procedure for avoiding contamination by refillable returnable containers.
+06A,Personal cleanliness is inadequate. Outer garment soiled with possible contaminant. Effective hair restraint not worn where required.  Jewelry is worn on hands or arms.  Fingernail polish worn or fingernails not kept clean and trimmed.
+06B,"Tobacco or electronic cigarette use, eating, or drinking from open container in food preparation, food storage or dishwashing area."
+06C,"Food, supplies, or equipment not protected from potential source of contamination during storage, preparation, transportation, display, service or from customer’s refillable, reusable container. Condiments not in single-service containers or dispensed directly by the vendor."
+06D,"Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred."
+06E,"Sanitized equipment or utensil, including in-use food dispensing utensil, improperly used or stored."
+06F,"Wiping cloths not stored clean and dry, or in a sanitizing solution, between uses."
+06G,HACCP plan not approved or approved HACCP plan not maintained on premises.
+07A,Duties of an officer of the Department interfered with or obstructed.
+08A,"Establishment is not free of harborage or conditions conducive to rodents, insects or other pests."
+08B,"Garbage receptacle not pest or water resistant, with tight-fitting lids, and covered except while in active use. Garbage receptacle and cover not cleaned after emptying and prior to reuse. Garbage, refuse and other solid and liquid waste not collected, stored, removed and disposed of so as to prevent a nuisance."
+08C,"Pesticide not properly labeled or used by unlicensed individual. Pesticide, other toxic chemical improperly used/stored. Unprotected, unlocked bait station used."
+09A,Canned food product observed dented and not segregated from other consumable food items.
+09B,Thawing procedure improper.
+09C,"Design, construction, materials used or maintenance of food contact surface improper. Surface not easily cleanable, sanitized and maintained."
+09D,Food service operation occurring in room or area used as living or sleeping quarters.
+09E,Wash hands sign not posted near or above hand washing sink.
+10A,"Toilet facility not maintained or provided with toilet paper, waste receptacle or self-closing door."
+10B,Anti-siphonage or back-flow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly. Condensation or liquid waste improperly disposed of.
+10C,"Lighting inadequate; permanent lighting not provided in food preparation areas, ware washing areas, and storage rooms. Shatterproof bulb or shield to prevent broken glass from falling into food or onto surfaces, not installed."
+10D,"Mechanical or natural ventilation not provided, inadequate, improperly installed, in disrepair or fails to prevent and control excessive build-up of grease, heat, steam condensation, vapors, odors, smoke or fumes."
+10E,"Accurate thermometer not provided or properly located in refrigerated, cold storage or hot holding equipment"
+10F,"Non-food contact surface or equipment made of unacceptable material, not kept clean, or not properly sealed, raised, spaced or movable to allow accessibility for cleaning on all sides, above and underneath the unit."
+10G,"Dishwashing and ware washing: Cleaning and sanitizing of tableware, including dishes, utensils, and equipment deficient."
+10H,"Single service article not provided. Single service article reused or not protected from contamination when transported, stored, dispensed. Drinking straws not completely enclosed in wrapper or dispensed from a sanitary device."
+10I,"Single service item reused, improperly stored, dispensed; not used when required."
+10J,Hand wash sign not posted
+15-01,Smoking or electronic cigarette use allowed in prohibited area
+15-27,Sign prohibiting smoking or using electronic cigarettes not conspicuously posted.
+15-37,Workplace SFAA policy not prominently posted in workplace.
+15-39,Ashtray present in smoke-free area.
+15-42,"Failure to make a good faith effort to inform smokers or electronic cigarette users of Smoke-Free Air Act (""SFAA"") prohibitions"
+15F1,Ashtrays in smoke-free area
+15F6,Workplace SFAA policy not prominently posted in workplace
+16-01,"A food containing artificial trans-fat, with 0.5 grams or more of trans fat per serving, is being stored, distributed, held for service, used in preparation of a menu item, or served."
+16-02,"The original nutrition fact labels or ingredient label for a cooking oil, shortening or margarine or food item sold in bulk, or acceptable manufacturer’s documentation not maintained on site."
+16-03,"Caloric content not posted on menus, menu boards or food tags, in a food service establishment that is 1 of 15 or more outlets operating the same type of business nationally under common ownership or control, or as a franchise or doing business under the same name, for each menu item that is served in portions, the size and content of which are standardized."
+16-04,"Required succinct nutritional statements not posted on menu(s) for adults and children (2,000 calories per day for adults)"
+16-06,"Additional nutritional information statement not posted, or additional nutritional information not provided"
+16-10,Sodium Warning statement not posted conspicuously at the point of purchase. “Warning: [icon image] indicates that the sodium (salt) content of this item is higher than the total daily recommended limit (2300 mg). High sodium intake can increase blood pressure and risk of heart disease and stroke.”
+16B,"The original nutritional fact labels and/or ingredient label for a cooking oil, shortening or margarine or food item sold in bulk, or acceptable manufacturer’s documentation not maintained on site."
+18-11,Food Protection Certificate not available for inspection
+18-12,"Document issued by the Board of Health, Commissioner or Department reproduced or altered. False, untrue or misleading statement or document made to, submitted or filed with the Department"
+18-13,"Failure to comply with an order of the Board of Health, Commissioner or Department."
+18-14,"Order or notice posted or required to be posted by the Department mutilated, obstructed or removed."
+19-01,Organics mixed with non-organic material
+19-02,Organics containers not labeled
+19-05,Providing single-use plastic stirrers or single-use plastic splash sticks.
+19-06,"Providing single-use, non-compostable plastic straws to customers without customer request (including providing such straws at a self-serve station)"
+19-07,"Failure to maintain a sufficient supply of single-use, non-compostable plastic straws."
+19-08,"Failure to provide a single-use, non-compostable plastic straw upon request."
+19-10,Failure to display required signage about plastic straw availability
+19-11,Providing compostable plastic straws to be used outside of the food establishment’s premises; failure to appropriately dispose of compostable plastic straws; failure to maintain required bins for disposal of compostable plastic straws.
+20-01,Allergen or intolerance notice not translated into common language when required
+20-02,Failure to conspicuously post a hyperlink to the Department’s inspection lookup tool as required.
+20-04,"“Choking first aid” poster not posted. “Alcohol and Pregnancy” warning sign not posted. Resuscitation equipment: exhaled air resuscitation masks (adult & pediatric), latex gloves, sign not posted."
+20-05,"Current letter grade or ""Grade Pending"" card not conspicuously posted or visible to passersby"
+20-06,Current letter grade or Grade Pending card not posted
+20-07,"Letter grade or Grade Pending card removed, destroyed, modified, obscured, or otherwise tampered with"
+20-08,Failure to post or conspicuously post healthy eating information
+20A,Food allergy information poster not conspicuously posted where food is being prepared or processed by food workers.
+20D,"“Choking first aid” poster not posted. “Alcohol and pregnancy” warning sign not posted. Resuscitation equipment: exhaled air resuscitation masks (adult & pediatric), latex gloves, sign not posted."
+20F,Current letter grade sign not posted.
+22A,"Nuisance created or allowed to exist.  Facility not free from unsafe, hazardous, offensive or annoying conditions."
+28-01,"Nuisance created or allowed to exist. Facility not free from unsafe, hazardous, offensive or annoying condition."
+28-03,"Lighting fixture located over, by or within food storage, preparation, service or display facility, and facility where utensils and equipment are cleaned and stored, which may shatter due to extreme heat, temperature changes or accidental contact; not fitted with shatterproof bulb or shielded and encased, with end caps or other device."
+28-04,Equipment used for ROP not approved by the Department
+28-05,"Food adulterated or misbranded. Adulterated or misbranded food possessed, being manufactured, produced, packed, sold, offered for sale, delivered or given away"
+28-06,Contract with a pest management professional not in place. Record of extermination activities not kept on premises.
+28-07,"Unapproved outdoor, street or sidewalk cooking."
