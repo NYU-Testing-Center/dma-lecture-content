@@ -10,6 +10,8 @@ notebooks/lecture-02-python-fundamentals.ipynb
 notebooks/lecture-33-graph-databases-neo4j.ipynb
 ```
 
+**Datasets:** [nyu-testing-center.github.io/dma-lecture-content/datasets](https://nyu-testing-center.github.io/dma-lecture-content/datasets/) lets you browse every dataset used in the lectures and assignments and run SQLite queries in your browser.
+
 **Quiz and exam reference:** [reference/](reference/) has the complete Python, NumPy, pandas and SQLite reference that PrairieTest shows during quizzes and exams, on one page so you can study from it beforehand.
 
 ---
