@@ -85,17 +85,32 @@ if os.path.isdir(SITE):
 os.makedirs(os.path.join(SITE, 'data'))
 shutil.copy(os.path.join(HERE, 'sql-wasm.wasm'), os.path.join(SITE, 'sql-wasm.wasm'))
 
+# Notes shown under a dataset's name, by its displayed name.
+NOTES = {
+    'movies.db': "Starts empty: Lecture 22's INSERT examples fill in the movie table. "
+                 "The filled-in version is movies2.db.",
+    'movies2.db': "The movie table after Lecture 22's INSERT examples (17 movies).",
+    'movies2_with_genre.db': "Not the same as movies2.db: this one has a separate genre table. "
+                             "Two Lecture 22 PrairieLearn exercises use it under the name movies2.db.",
+}
+
+def lecture_names(d):
+    return {os.path.basename(p) for p in d['paths'] if 'dma-lecture-content' in p}
+
 catalog, total_gz = [], 0
 for h, d in sorted(by_hash.items(), key=lambda kv: kv[1]['names'][0].lower()):
-    names = sorted(d['names'], key=lambda n: (n != os.path.basename(d['paths'][0]), n))
+    # Title each dataset with a name no other dataset uses if it has one (so two
+    # different files never show the same title), then the lecture notebook's
+    # filename; its other names are listed as aliases.
+    lec = lecture_names(d)
+    names = sorted(d['names'], key=lambda n: (name_count[n] > 1, n not in lec,
+                                               n != os.path.basename(d['paths'][0]), n))
     primary = names[0]
     src = d['paths'][0]
     k = kind(primary)
-    note = ''
-    if name_count[primary] > 1:
+    note = NOTES.get(primary, '')
+    if not note and name_count[primary] > 1:
         note = ('Lecture notebook version' if 'dma-lecture-content' in src else 'PrairieLearn exercise version')
-        if primary == 'movies2.db':
-            note = 'Version with a genre table' if len(names) > 1 else 'Version without a genre table'
     slug = re.sub(r'[^A-Za-z0-9]+', '-', primary.rsplit('.', 1)[0]).strip('-').lower() + '-' + h[:6]
     gzname = f'data/{slug}.{primary.rsplit(".", 1)[1].lower()}.gz.b64.txt'
     raw = open(src, 'rb').read()
