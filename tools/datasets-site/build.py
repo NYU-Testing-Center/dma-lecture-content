@@ -39,9 +39,18 @@ SKIP_BROKEN = {'athlete_events.db'}  # truncated file in the lecture repo; unuse
 # movies.db is Lecture 22's empty starter table (the lecture's INSERTs fill it in);
 # movies2.db is the filled-in version, so the empty one isn't listed.
 SKIP_EMPTY = {'movies.db'}
+# Copies not published as datasets of their own: their uses are credited to the
+# same-named dataset instead. Lecture 29's msft.db has the same MSFT table as
+# Assignment 11's msft.db, which also has four views; listing both would show two
+# near-identical msft.db entries.
+FOLD_INTO_SAME_NAME = {os.path.expanduser('~/dma-lecture-content/notebooks/msft.db')}
+folded = []
 for key, e in inv.items():
     name, h = key.split('|')
     if name in SKIP_BROKEN or name in SKIP_EMPTY:
+        continue
+    if e['paths'] and all(p in FOLD_INTO_SAME_NAME for p in e['paths']):
+        folded.append((name, e))
         continue
     d = groups.setdefault(group_key(name, h, e['paths']),
                           {'names': [], 'paths': [], 'uses': set(), 'hashes': {}})
@@ -51,6 +60,10 @@ for key, e in inv.items():
     for p in e['paths']:
         d['hashes'][p] = h
     d['uses'] |= {tuple(u) for u in e['uses']}
+for name, e in folded:
+    targets = [d for d in groups.values() if name in d['names']]
+    assert len(targets) == 1, f'{name}: expected one dataset to fold into, found {len(targets)}'
+    targets[0]['uses'] |= {tuple(u) for u in e['uses']}
 
 # When the copies differ (BOM / line endings), publish the lecture notebook's copy
 # and keep its hash in the dataset's id.
@@ -122,10 +135,11 @@ catalog, total_gz = [], 0
 for h, d in sorted(by_hash.items(), key=lambda kv: kv[1]['names'][0].lower()):
     # Title each dataset with a name no other dataset uses if it has one (so two
     # different files never show the same title), then the lecture notebook's
-    # filename; its other names are listed as aliases.
+    # filename, then the filename used by the most copies (not scan order, so the
+    # title and id don't change between rescans); other names are listed as aliases.
     lec = lecture_names(d)
-    names = sorted(d['names'], key=lambda n: (name_count[n] > 1, n not in lec,
-                                               n != os.path.basename(d['paths'][0]), n))
+    copies = lambda n: sum(os.path.basename(p) == n for p in d['paths'])
+    names = sorted(d['names'], key=lambda n: (name_count[n] > 1, n not in lec, -copies(n), n))
     primary = names[0]
     src = d['paths'][0]
     k = kind(primary)
