@@ -36,9 +36,12 @@ def group_key(name, h, paths):
 # Merge entries with identical content under one dataset (aliases).
 groups = {}
 SKIP_BROKEN = {'athlete_events.db'}  # truncated file in the lecture repo; unused
+# movies.db is Lecture 22's empty starter table (the lecture's INSERTs fill it in);
+# movies2.db is the filled-in version, so the empty one isn't listed.
+SKIP_EMPTY = {'movies.db'}
 for key, e in inv.items():
     name, h = key.split('|')
-    if name in SKIP_BROKEN:
+    if name in SKIP_BROKEN or name in SKIP_EMPTY:
         continue
     d = groups.setdefault(group_key(name, h, e['paths']),
                           {'names': [], 'paths': [], 'uses': set(), 'hashes': {}})
@@ -107,8 +110,6 @@ shutil.copy(os.path.join(HERE, 'sql-wasm.wasm'), os.path.join(SITE, 'sql-wasm.wa
 
 # Notes shown under a dataset's name, by its displayed name.
 NOTES = {
-    'movies.db': "Starts empty: Lecture 22's INSERT examples fill in the movie table. "
-                 "The filled-in version is movies2.db.",
     'movies2.db': "The movie table after Lecture 22's INSERT examples (17 movies).",
     'movies2_with_genre.db': "Not the same as movies2.db: this one has a separate genre table. "
                              "Two Lecture 22 PrairieLearn exercises use it under the name movies2.db.",
