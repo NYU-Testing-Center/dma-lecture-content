@@ -3,7 +3,7 @@
 Usage is listed for lectures and assignments only. Quizzes, exams and
 practice/sample finals are never mentioned.
 """
-import base64, csv, glob, gzip, io, json, os, re, shutil, sqlite3
+import base64, csv, glob, gzip, hashlib, io, json, os, re, shutil, sqlite3
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, '..', '..', 'datasets')  # published by GitHub Pages
@@ -19,22 +19,42 @@ for f in glob.glob('/Users/matthewzeidenberg/dma-lecture-content/notebooks/lectu
     title = re.sub(r'\bpandas\b', 'pandas', title)
     LECTURES[int(m.group(1))] = title
 
+def kind(name):
+    ext = name.rsplit('.', 1)[-1].lower()
+    return {'db': 'sqlite', 'sqlite': 'sqlite', 'csv': 'csv', 'tsv': 'csv', 'json': 'json'}[ext]
+
+def group_key(name, h, paths):
+    """Files with identical content are one dataset. CSVs also count as identical
+    when they differ only by a byte-order mark, Windows line endings (Excel adds both)
+    or a newline at the end of the file."""
+    if kind(name) != 'csv':
+        return h
+    raw = open(paths[0], 'rb').read()
+    raw = raw.removeprefix(b'\xef\xbb\xbf').replace(b'\r\n', b'\n').rstrip(b'\n') + b'\n'
+    return 'csv:' + hashlib.sha1(raw).hexdigest()
+
 # Merge entries with identical content under one dataset (aliases).
-by_hash = {}
+groups = {}
 SKIP_BROKEN = {'athlete_events.db'}  # truncated file in the lecture repo; unused
 for key, e in inv.items():
     name, h = key.split('|')
     if name in SKIP_BROKEN:
         continue
-    d = by_hash.setdefault(h, {'names': [], 'paths': [], 'uses': set()})
+    d = groups.setdefault(group_key(name, h, e['paths']),
+                          {'names': [], 'paths': [], 'uses': set(), 'hashes': {}})
     if name not in d['names']:
         d['names'].append(name)
     d['paths'] += e['paths']
+    for p in e['paths']:
+        d['hashes'][p] = h
     d['uses'] |= {tuple(u) for u in e['uses']}
 
-def kind(name):
-    ext = name.rsplit('.', 1)[-1].lower()
-    return {'db': 'sqlite', 'sqlite': 'sqlite', 'csv': 'csv', 'tsv': 'csv', 'json': 'json'}[ext]
+# When the copies differ (BOM / line endings), publish the lecture notebook's copy
+# and keep its hash in the dataset's id.
+by_hash = {}
+for d in groups.values():
+    d['paths'].sort(key=lambda p: 'dma-lecture-content' not in p)
+    by_hash[d['hashes'][d['paths'][0]]] = d
 
 def describe_sqlite(path):
     con = sqlite3.connect(f'file:{path}?mode=ro', uri=True)
