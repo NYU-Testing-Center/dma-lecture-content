@@ -258,7 +258,22 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
       </div>`).join('') + '</div>';
   }
 
-  function quote(name) { return /^[A-Za-z_][A-Za-z0-9_]*$/.test(name) ? name : '"' + name.replace(/"/g, '""') + '"'; }
+  // SQLite's keywords (sqlite.org/lang_keywords.html): a table or column with one of
+  // these names, like default.csv's "default", must be written in double quotes.
+  const SQL_KEYWORDS = new Set(('ABORT ACTION ADD AFTER ALL ALTER ALWAYS ANALYZE AND AS ASC ATTACH AUTOINCREMENT ' +
+    'BEFORE BEGIN BETWEEN BY CASCADE CASE CAST CHECK COLLATE COLUMN COMMIT CONFLICT CONSTRAINT CREATE CROSS ' +
+    'CURRENT CURRENT_DATE CURRENT_TIME CURRENT_TIMESTAMP DATABASE DEFAULT DEFERRABLE DEFERRED DELETE DESC DETACH ' +
+    'DISTINCT DO DROP EACH ELSE END ESCAPE EXCEPT EXCLUDE EXCLUSIVE EXISTS EXPLAIN FAIL FILTER FIRST FOLLOWING FOR ' +
+    'FOREIGN FROM FULL GENERATED GLOB GROUP GROUPS HAVING IF IGNORE IMMEDIATE IN INDEX INDEXED INITIALLY INNER ' +
+    'INSERT INSTEAD INTERSECT INTO IS ISNULL JOIN KEY LAST LEFT LIKE LIMIT MATCH MATERIALIZED NATURAL NO NOT ' +
+    'NOTHING NOTNULL NULL NULLS OF OFFSET ON OR ORDER OTHERS OUTER OVER PARTITION PLAN PRAGMA PRECEDING PRIMARY ' +
+    'QUERY RAISE RANGE RECURSIVE REFERENCES REGEXP REINDEX RELEASE RENAME REPLACE RESTRICT RETURNING RIGHT ' +
+    'ROLLBACK ROW ROWS SAVEPOINT SELECT SET TABLE TEMP TEMPORARY THEN TIES TO TRANSACTION TRIGGER UNBOUNDED UNION ' +
+    'UNIQUE UPDATE USING VACUUM VALUES VIEW VIRTUAL WHEN WHERE WINDOW WITH WITHOUT').split(' '));
+  function quote(name) {
+    return /^[A-Za-z_][A-Za-z0-9_]*$/.test(name) && !SQL_KEYWORDS.has(name.toUpperCase())
+      ? name : '"' + name.replace(/"/g, '""') + '"';
+  }
 
   function examplesFor(tables) {
     const t = tables.filter(t => !t.view && !t.broken);
@@ -342,7 +357,18 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
   }
 
   // CSV dataset: browse, filter, page, and optionally query as a SQLite table.
-  function tableNameFor(d) { return d.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^(\d)/, '_$1'); }
+  function tableNameFor(d) {
+    const t = d.name.replace(/\.[^.]+$/, '').replace(/[^A-Za-z0-9_]+/g, '_').replace(/^(\d)/, '_$1');
+    // A file named after an SQL keyword gets an "s" (default.csv -> defaults), so its
+    // table can be written without double quotes.
+    return SQL_KEYWORDS.has(t.toUpperCase()) ? t + 's' : t;
+  }
+  function keywordColumnsNote(header) {
+    const kw = csvHeader(header).filter(h => SQL_KEYWORDS.has(h.toUpperCase()));
+    if (!kw.length) return '';
+    return ' Write ' + (kw.length > 1 ? 'the columns ' : 'the column ') + kw.map(h => '<code>' + esc(h) + '</code>').join(', ') +
+      ' in double quotes, e.g. <code>' + esc(quote(kw[0])) + '</code>, because ' + (kw.length > 1 ? 'they are SQL keywords.' : 'it is an SQL keyword.');
+  }
   function csvHeader(header) { return header.map((h, i) => h.trim() || (i === 0 ? 'row_index' : 'col' + (i + 1))); }
   async function csvDb(d, fresh) {
     const key = d.id + ':sql';
@@ -375,13 +401,14 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
         <div class="pager"><button class="btn" id="prev">Previous</button><button class="btn" id="next">Next</button><span class="status" id="pageinfo"></span></div>
       </section>
       <section class="panel" id="sqlsection"><div class="cols"><h3>Query with SQL</h3></div>
-        <p class="hint" style="margin:0 0 10px">This file isn't a database, but you can load it into one for practice. It becomes a table named <code>${esc(tableNameFor(d))}</code>.</p>
+        <p class="hint" style="margin:0 0 10px">This file isn't a database, but you can load it into one for practice. It becomes a table named <code>${esc(quote(tableNameFor(d)))}</code>.<span id="kwnote"></span></p>
         <button class="btn" id="tosql">Load into SQLite</button></section>`;
     let rows;
     try { rows = parseCSV(await text(d)).filter(r => r.length > 1 || r[0] !== ''); }
     catch (err) { $('#grid').innerHTML = `<div class="error">${esc(err.message)}</div>`; return; }
     if (current !== d) return;
     const header = rows[0] || [], body = rows.slice(1);
+    if ($('#kwnote')) $('#kwnote').innerHTML = keywordColumnsNote(header);
     let filtered = body, page = 0;
     function draw() {
       const pages = Math.max(1, Math.ceil(filtered.length / PAGE));
@@ -407,7 +434,7 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
     $('#tosql').addEventListener('click', () => {
       const t = tableNameFor(d);
       const tables = [{ name: t, rows: body.length, columns: csvHeader(header).map(n => ({ name: n, type: '' })) }];
-      $('#sqlsection').outerHTML = queryPanel(d, tables, `Table: ${t}`);
+      $('#sqlsection').outerHTML = queryPanel(d, tables, `Table: ${quote(t)}`);
       wireQuery(d, () => csvDb(d), () => csvDb(d, true));
     });
   }
