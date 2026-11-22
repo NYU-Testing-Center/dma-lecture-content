@@ -14,6 +14,7 @@ for f in glob.glob('/Users/matthewzeidenberg/dma-lecture-content/notebooks/lectu
     m = re.match(r'lecture-(\d+)-(.*)\.ipynb', os.path.basename(f))
     title = m.group(2).replace('-', ' ')
     title = re.sub(r'\bsqlite\b', 'SQLite', title.capitalize())
+    title = re.sub(r'\b[Ss]ql\b', 'SQL', title)  # capitalize() makes a leading "sql" "Sql"
     title = re.sub(r'\b(xml|json|numpy|mongodb|neo4j)\b',
                    lambda x: {'xml': 'XML', 'json': 'JSON', 'numpy': 'NumPy', 'mongodb': 'MongoDB', 'neo4j': 'Neo4j'}[x.group(1)], title)
     title = re.sub(r'\bpandas\b', 'pandas', title)
