@@ -61,6 +61,10 @@ h1 .course { color: var(--accent); }
 .ds-head .back { font-size: 13px; }
 .ds-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .ds-title h2 { font: 600 1.35rem/1.2 var(--mono); margin: 0; overflow-wrap: anywhere; }
+.ds-title .dl-btn { margin-left: auto; }
+.link-btn { font: 600 13px var(--body); background: none; border: 0; padding: 0; color: var(--accent, #57068c); text-decoration: underline; cursor: pointer; white-space: nowrap; }
+.link-btn:disabled { color: var(--muted, #6b6478); text-decoration: none; cursor: default; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .meta { color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-variant-numeric: tabular-nums; }
 .uses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 .use { font-size: 12.5px; background: var(--sunk); border-radius: 4px; padding: 2px 8px; }
@@ -106,6 +110,7 @@ table.data.home { font-family: var(--body); font-size: 13.5px; width: 100%; }
 table.data.home td:first-child a { font: 500 13.5px var(--mono); }
 table.data.home td:nth-child(2) { white-space: nowrap; }
 table.data.home td:nth-child(3) { color: var(--muted); }
+table.data.home td:nth-child(4) { overflow-wrap: normal; min-width: 7.5em; }  /* "Assignment 10" breaks between words only */
 .pager { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .empty { color: var(--muted); padding: 40px 0; text-align: center; }
 pre.json { font: 12.5px/1.5 var(--mono); margin: 0; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -242,7 +247,8 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
     const extra = d.aliases && d.aliases.length ? `<span>Also published as ${d.aliases.map(a => '<code>' + esc(a) + '</code>').join(', ')}</span>` : '';
     return `<section class="panel ds-head">
       <a class="back" href="#home">← All datasets</a>
-      <div class="ds-title"><span class="badge ${d.kind}">${d.kind === 'sqlite' ? 'SQLite' : d.kind.toUpperCase()}</span><h2>${esc(d.name)}</h2></div>
+      <div class="ds-title"><span class="badge ${d.kind}">${d.kind === 'sqlite' ? 'SQLite' : d.kind.toUpperCase()}</span><h2>${esc(d.name)}</h2>
+        <button class="btn dl-btn" data-dl="${esc(d.id)}" title="Save the original ${esc(d.name)} to your computer">Download</button></div>
       <div class="meta"><span>${fmtBytes(d.bytes)}</span><span>${esc(summary(d))}</span>${d.note ? `<span>${esc(d.note)}</span>` : ''}${extra}</div>
       <div class="uses" aria-label="Used in">${uses}</div>
     </section>`;
@@ -495,12 +501,13 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
         return `<section class="panel">
           <div class="cols"><h3>${label} · ${ds.length}</h3><span class="hint">${blurb}</span></div>
           <div class="scroll" style="max-height:none"><table class="data home">
-            <thead><tr><th>Name</th><th class="num">Size</th><th>Contents</th><th>Used in</th></tr></thead>
+            <thead><tr><th>Name</th><th class="num">Size</th><th>Contents</th><th>Used in</th><th><span class="sr-only">Download</span></th></tr></thead>
             <tbody>${ds.map(d => `<tr>
               <td><a href="#${d.id}">${esc(d.name)}</a>${d.note ? `<div class="hint">${esc(d.note)}</div>` : ''}</td>
               <td class="num">${fmtBytes(d.bytes)}</td>
               <td>${esc(d.kind === 'sqlite' ? d.info.tables.filter(t => !t.view).map(t => t.name).join(', ') : summary(d))}</td>
               <td>${d.uses.length ? d.uses.map(u => esc(u.label)).join(', ') : '<span class="hint">Reference dataset</span>'}</td>
+              <td><button class="link-btn" data-dl="${esc(d.id)}" aria-label="Download ${esc(d.name)}">Download</button></td>
             </tr>`).join('')}</tbody>
           </table></div>
         </section>`;
@@ -524,6 +531,31 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 24px; max-width: 80
     window.scrollTo(0, 0);
     ({ sqlite: showSqlite, csv: showCsv, json: showJson })[d.kind](d);
   }
+  // Download buttons (dataset page and home tables): save the original file under its own name.
+  const MIME = { sqlite: 'application/vnd.sqlite3', csv: 'text/csv', json: 'application/json' };
+  document.addEventListener('click', async e => {
+    const b = e.target.closest('[data-dl]');
+    if (!b || b.disabled) return;
+    const d = byId[b.dataset.dl];
+    if (!d) return;
+    const label = b.textContent;
+    b.disabled = true; b.textContent = 'Preparing…';
+    try {
+      const url = URL.createObjectURL(new Blob([await loadBytes(d)], { type: MIME[d.kind] || 'application/octet-stream' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = d.name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      b.textContent = label;
+    } catch (err) {
+      b.textContent = 'Download failed';
+      b.title = err.message;
+      setTimeout(() => { b.textContent = label; }, 4000);
+    } finally {
+      b.disabled = false;
+    }
+  });
+
   window.addEventListener('hashchange', () => show(location.hash.slice(1)));
   if (!C.length) { $('#main').innerHTML = '<div class="panel error">The list of datasets didn\'t load. Reload the page; if it stays empty, tell your instructor.</div>'; return; }
   renderList();
